@@ -1,0 +1,82 @@
+<div class="container">
+  <div class="page-header">
+    <h1>Statistics of logs</h1>
+  </div>
+</div>
+
+<div class="container">
+  <div class="col-md-12 col-sm-12 col-xs-12">
+
+    <!-- doughnutChartLogs  panel -->
+    <div class="panel-heading">
+      <h4 class="panel-title" (click)="statisticsMaker()">
+        <a data-toggle="collapse" href="#panelDoughnutChart">
+          <p>
+            <font class="text-primary">Doughnut Chart</font>
+          </p>
+        </a>
+      </h4>
+    </div>
+    <div id="panelDoughnutChart" class="panel-collapse collapse">
+
+      <div class="panel-body">
+        <canvas baseChart [data]="doughnutChartData" [labels]="doughnutChartLabels" [chartType]="doughnutChartType" (chartHover)="chartHovered($event)">
+        </canvas>
+      </div>
+
+    </div>
+    <!-- end of doughnutChartLogs  panel -->
+
+    <br>
+
+    <!-- barChartLogs  panel -->
+    <div class="panel-heading">
+      <h4 class="panel-title" (click)="statisticsBarChartMaker()">
+        <a data-toggle="collapse" href="#barChartPanel" (click)="updateBarChartLabels()">
+          <p>
+            <font class="text-primary">Bar Chart</font>
+          </p>
+        </a>
+      </h4>
+    </div>
+    <div id="barChartPanel" class="panel-collapse collapse">
+
+      <div style="display: block">
+
+        <canvas baseChart [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions" [chartType]="barChartType"
+          [colors]="lineChartColors" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)">
+        </canvas>
+        <button (click)="alterDateOrder()">Date Order</button>
+
+      </div>
+
+    </div>
+    <!-- end of barChartLogs  panel -->
+
+    <br>
+
+    <!-- lineChartLogs  panel -->
+    <div class="panel-heading">
+      <h4 class="panel-title" (click)="statisticsLineChartMaker()">
+        <a data-toggle="collapse" href="#lineChartPanel">
+          <p>
+            <font class="text-primary">Line Chart</font>
+          </p>
+        </a>
+      </h4>
+    </div>
+    <div id="lineChartPanel" class="panel-collapse collapse">
+
+      <div style="display: block">
+        <canvas baseChart width="200" height="100" [datasets]="lineChartData" [labels]="lineChartLabels" [options]="lineChartOptions"
+          [colors]="lineChartColors" [legend]="lineChartLegend" [chartType]="lineChartType" (chartHover)="chartHovered($event)"
+          (chartClick)="chartClicked2($event)"></canvas>
+      </div>
+
+    </div>
+    <!-- end of lineChartLogs  panel -->
+
+    <br>
+
+  </div>
+</div>

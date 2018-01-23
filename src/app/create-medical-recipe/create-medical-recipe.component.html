@@ -1,0 +1,47 @@
+<div class="container">
+  <div class="row">
+    <div class="col-xs-12">
+      <div class="margin-20">
+        <h4>Create Medical Recipe</h4>
+      </div>
+      <form [formGroup]="myForm" novalidate (ngSubmit)="save(myForm)">
+        <div class="form-group">
+          <label>Patient ID</label>
+          <input type="text" class="form-control" formControlName="patient">
+          <small *ngIf="!myForm.controls.patient.valid" class="text-danger">
+            Patient ID is required
+          </small>
+        </div>
+        <!--addresses-->
+        <div formArrayName="prescriptions">
+          <div *ngFor="let prescription of myForm.controls.prescriptions.controls; let i=index" class="panel panel-default">
+            <div class="panel-heading">
+              <span>Prescription {{i + 1}}</span>
+              <span class="glyphicon glyphicon-remove pull-right" *ngIf="myForm.controls.prescriptions.controls.length > 1" (click)="removePrescription(i)"></span>
+            </div>
+            <div class="panel-body" [formGroupName]="i">
+              <app-prescription [group]="myForm.controls.prescriptions.controls[i]"></app-prescription>
+            </div>
+          </div>
+        </div>
+
+        <div class="margin-20">
+          <a (click)="addPrescription()" style="cursor: default">
+              <font color="#3498DB">Add another prescription + </font>
+          </a>
+        </div>
+
+        <!-- MESSAGES TO USER -->
+        <div *ngIf="response && response.includes('successfully')" class="alert alert-success">
+          <strong>Success!</strong> {{response}}
+        </div>
+
+        <div class="margin-20">
+          <button [disabled]="loading" (click)="save()" type="submit" class="btn btn-primary pull-right" [disabled]="!myForm.valid">Submit</button>
+        </div>
+        <div class="clearfix"></div>
+
+      </form>
+    </div>
+  </div>
+</div>

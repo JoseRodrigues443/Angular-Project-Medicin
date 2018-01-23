@@ -1,0 +1,136 @@
+<div class="col-md-6 col-md-offset-3">
+
+
+  <div align="center">
+    <font size="5">Pharmacy</font>
+  </div>
+
+  <!-- INPUT for searchMedicalRecipeId -->
+  <form name="form" (ngSubmit)="f.form.valid && searchMedicalRecipe()" #f="ngForm" novalidate>
+
+    <!-- INPUT BOX for searchMedicalRecipeId -->
+    <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !searchMedicalRecipeId.valid}">
+      <label for="searchMedicalRecipeId">Medical Recipe ID</label>
+      <input type="text" class="form-control" name="searchMedicalRecipeId" [(ngModel)]="model.searchMedicalRecipeId" #searchMedicalRecipeId="ngModel"
+        required />
+      <div *ngIf="f.submitted && !searchMedicalRecipeId.valid" class="helpblock">Medical Recipe Id is required</div>
+    </div>
+
+    <!-- BUTTON SEARCH -->
+    <div class="form-group">
+      <button [disabled]="loading" class="btn btn-primary">Search</button>
+      <img *ngIf="loading" src="assets/images/buffer.gif" />
+    </div>
+  </form>
+
+  <!-- MEDICAL RECIPE -->
+  <div *ngIf="medicalRecipe" class="container">
+    <div class="col-md-6 col-md-offset-1">
+      <div class="panel-group wrap" id="bs-collapse">
+        <div class="panel">
+          <div class="panel-heading">
+            <h4 class="panel-title">
+              <a data-toggle="collapse" data-parent="#bs-collapse" href="#one">
+                <p>
+                  <font class="text-primary">Medical Recipe ID: </font> {{medicalRecipe._id}}
+                </p>
+              </a>
+            </h4>
+          </div>
+          <div id="one" class="panel-collapse collapse">
+            <!-- PRESCRIPTIONS -->
+            <div *ngFor="let prescription of medicalRecipe.prescriptions; let i = index">
+              <div class="panel-body">
+                <div class="container">
+                  <div class="col-md-12 col-sm-12 col-xs-12">
+                    <div class="panel-group wrap" id="bs-collapse1">
+                      <div class="panel-heading">
+                        <h4 class="panel-title">
+                          <a data-toggle="collapse" data-parent="#bs-collapse1" href="#one{{i}}">
+                            <p>
+                              <font class="text-primary">Prescription ID: </font> {{medicalRecipe.prescriptions[i]._id}}
+                            </p>
+                          </a>
+                        </h4>
+                      </div>
+                      <div id="one{{i}}" class="panel-collapse collapse">
+                        <div class="panel-body">
+                          <p>
+                            <font class="text-primary">DrugID: </font> {{medicalRecipe.prescriptions[i].drug}}</p>
+                          <p>
+                            <font class="text-primary">Medicine: </font> {{medicalRecipe.prescriptions[i].medicine}}</p>
+                          <p>
+                            <font class="text-primary">Concentration: </font> {{medicalRecipe.prescriptions[i].concentration}}</p>
+                          <p>
+                            <font class="text-primary">Posology: </font> {{medicalRecipe.prescriptions[i].posology}}</p>
+                          <p>
+                            <font class="text-primary">Quantity: </font> {{medicalRecipe.prescriptions[i].quantity}}</p>
+                          <p>
+                            <font class="text-primary">Packages Number: </font> {{medicalRecipe.prescriptions[i].packagesNumber}}</p>
+                          <p>
+                            <font class="text-primary">Prescribed Posology: </font> {{medicalRecipe.prescriptions[i].prescribedPosology}}</p>
+                          <p>
+                            <font class="text-primary">Form: </font> {{medicalRecipe.prescriptions[i].form}}</p>
+                          <!-- DISPENSES -->
+                          <ul>
+                            <div *ngFor="let dispense of medicalRecipe.prescriptions[i].dispenses; let j = index">
+                              <p>
+                                <font color="cyan">---- Dispenses ---</font>
+                              </p>
+                              <p>
+                                <font class="text-primary">Pharmacist: </font> {{medicalRecipe.prescriptions[i].dispenses[j].pharmacist}}</p>
+                              <p>
+                                <font class="text-primary">Dispense Date: </font> {{medicalRecipe.prescriptions[i].dispenses[j].dispenseDate}}</p>
+                              <p>
+                                <font class="text-primary">Dispensed Quantity: </font> {{medicalRecipe.prescriptions[i].dispenses[j].dispensedQuantity}}</p>
+                            </div>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- end of panel (PRESCRIPTIONS) -->
+          </div>
+        </div>
+        <!-- end of panel (MEDICAL RECIPE) -->
+      </div>
+    </div>
+  </div>
+
+  <!-- FORM to dispense -->
+  <form name="form" (ngSubmit)="f.form.valid && dispensePrescription()" #f="ngForm" novalidate>
+    <!-- MESSAGES TO USER -->
+    <div *ngIf="response && response.includes('dispensed')" class="alert alert-success">
+      <strong>Success!</strong> {{response}}
+    </div>
+    <div *ngIf="response && response.includes('Dispense not possible')" class="alert alert-danger">
+      <strong>Fail!</strong> {{response}}
+    </div>
+    <div *ngIf="response && response.includes('valid number')" class="alert alert-warning">
+      <strong>Warning!</strong> {{response}}
+    </div>
+    <!--       INPUT for prescriptionId -->
+    <div *ngIf="medicalRecipe" class="form-group" [ngClass]="{ 'has-error': f.submitted && !prescriptionId.valid }">
+      <label for="prescriptionId">Prescription ID</label>
+      <input type="prescriptionId" class="form-control" name="prescriptionId" [(ngModel)]="model.prescriptionId" #prescriptionId="ngModel"
+        required />
+      <div *ngIf="f.submitted && !prescriptionId.valid" class="helpblock">Prescription ID is required</div>
+    </div>
+    <!-- INPUT for dispenseQuantity -->
+    <div div *ngIf="medicalRecipe" class="form-group" [ngClass]="{ 'has-error': f.submitted && !dispensedQuantity.valid }">
+      <label for="dispensedQuantity">Dispense quantity</label>
+      <input type="dispensedQuantity" class="form-control" name="dispensedQuantity" [(ngModel)]="model.dispensedQuantity" #dispensedQuantity="ngModel"
+        required />
+      <div *ngIf="f.submitted && !dispensedQuantity.valid" class="helpblock">Dispense Quantity is required</div>
+    </div>
+    <!-- BUTTON DISPENSE -->
+    <div *ngIf=medicalRecipe class="form-group">
+      <button [disabled]="loading2" class="btn btn-primary">Dispense</button>
+      <img *ngIf="loading2" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA=="
+      />
+    </div>
+  </form>
+</div>

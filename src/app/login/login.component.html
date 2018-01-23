@@ -1,0 +1,34 @@
+<div class="col-md-6 col-md-offset-3">
+  <h2>Login</h2>
+  <form *ngIf="!isTwoFactor" name="form" (ngSubmit)="f.form.valid && login()" #f="ngForm" novalidate>
+    <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !email.valid }">
+      <label for="email">Username</label>
+      <input type="text" class="form-control" name="email" [(ngModel)]="model.email" #email="ngModel" required />
+      <div *ngIf="f.submitted && !email.valid" class="helpblock">email is required</div>
+    </div>
+
+    <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !password.valid }">
+      <label for="password">Password</label>
+      <input type="password" class="form-control" name="password" [(ngModel)]="model.password" #password="ngModel" required />
+      <div *ngIf="f.submitted && !password.valid" class="helpblock">Password is required</div>
+
+      <button [disabled]="loading" class="btn btn-primary">Login</button>
+      <img *ngIf="loading" src="assets/images/buffer.gif" class="img-rounded center-block img-responsive" height="42" width="42"
+        style="margin:15px 15px 15px 15px">
+    </div>
+  </form>
+  <form *ngIf="isTwoFactor" name="form" (ngSubmit)="f2.form.valid && twoFactor()" #f2="ngForm" novalidate>
+
+    <div class="form-group" [ngClass]="{ 'has-error': f2.submitted && !twoFormInput.valid }">
+      <label for="twoFormInput">Two Form</label>
+      <input type="text" class="form-control" name="twoFormInput" [(ngModel)]="model.twoFormInput" #twoFormInput="ngModel" required
+      />
+      <div *ngIf="f2.submitted && !twoFormInput.valid" class="helpblock">Two Form is required</div>
+
+      <button [disabled]="loadingTwoFactor" class="btn btn-primary">Two Factor</button>
+      <img *ngIf="loading" src="assets/images/buffer.gif" class="img-rounded center-block img-responsive" height="42" width="42"
+        style="margin:15px 15px 15px 15px">
+    </div>
+    <div *ngIf="error" class="alert alert-danger">{{error}}</div>
+  </form>
+</div>

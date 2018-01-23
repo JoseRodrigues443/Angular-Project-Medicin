@@ -1,0 +1,336 @@
+<div class="container">
+	<div align="center">
+		<font size="5">Pharmacy Stock</font>
+	</div>
+	<!-- INPUT for searchPharmacyById -->
+	<form name="form" (ngSubmit)="f.form.valid && insertFarmacyId()" #f="ngForm" novalidate>
+	<!-- INPUT BOX for searchPharmacyById -->
+	<div class="form-group" [ngClass]="{ 'has-error': f.submitted && !PharmacyId.valid}">
+		<label class="control-label" for="PharmacyId">Pharmacy Id</label>
+		<div class="input-group">
+			<input type="text" class="form-control" name="PharmacyId" [(ngModel)]="model.PharmacyId" #PharmacyId="ngModel" required />
+			<div *ngIf="f.submitted && !PharmacyId.valid" class="helpblock">Pharmacy Id is required</div>
+			<!-- BUTTON SEARCH -->
+			<span class="input-group-btn">
+			<button [disabled]="loading" class="btn btn-primary" data-toggle="tooltip" data-placement="left" title="" data-original-title="Tooltip on left">
+			Search
+			</button>
+			<img *ngIf="loading" src="assets/images/buffer.gif" />
+			</span>
+		</div>
+	</div>
+	</form>
+	<!-- SHOW PHARMACY STOCK -->
+	<div class="container">
+		<div class="panel-group wrap" id="bs-collapse">
+			<div class="panel">
+				<div class="panel-heading">
+					<h4 class="panel-title">
+						<a data-toggle="collapse" data-parent="#bs-collapse" href="#one">
+							<p>
+								<font class="text-primary">Pharmacy Id: </font> {{ pharmacyId}}
+							</p>
+						</a>
+					</h4>
+				</div>
+				<div *ngIf="isPharmacyIdInserted" id="one" class="panel-collapse">
+					<!-- Stock list 
+						<div *ngFor="let prescription of medicalRecipe.prescriptions; let i = index">
+						  -->
+					<!-- Tabbed Pane  -->
+					<ul class="nav nav-tabs">
+						<li class="active">
+							<a href="#allStock" data-toggle="tab">
+							All Stock &nbsp;&nbsp;
+							<span class="badge">{{ stockList.length }}</span>
+							</a>
+						</li>
+						<li>
+							<a href="#inStock" data-toggle="tab">
+							In Stock &nbsp;&nbsp;
+							<span class="badge">{{ inStockListOutOfOrder.length }}</span>
+							</a>
+						</li>
+						<li>
+							<a href="#soldOut" data-toggle="tab">
+							Sold Out &nbsp;&nbsp;
+							<span class="badge">{{ stockListOutOfOrder.length }}</span>
+							</a>
+						</li>
+						<li>
+							<a href="#statistics" data-toggle="tab">
+							Statistics &nbsp;&nbsp;
+							</a>
+						</li>
+						<li>
+							<a href="#addStock" data-toggle="tab">
+							Add new Stock &nbsp;&nbsp;
+							</a>
+						</li>
+					</ul>
+					<div id="myTabContent" class="tab-content">
+						<div class="tab-pane fade active in" id="allStock">
+							<!-- list of stock -->
+							<ul class="list-group" *ngFor="let stock of stockList; let i = index">
+								<li class="list-group-item justify-content-between">
+									<div class="container">
+										<div class="row">
+											<div class="col-sm-7">
+												<p>
+													<font class="text-primary">Stock ID: </font> {{ stockList[i].id }}
+												</p>
+												<p>
+													<font class="text-warning">Quantity: </font> {{ stockList[i].quantidade }}
+												</p>
+												<p>
+													<font class="text-warning">Minimum Quantity: </font> {{ stockList[i].quantidadeMinima }}
+												</p>
+												<p>
+													<font class="text-warning">Presentation Id: </font>
+													<a href="#" data-toggle="modal" data-target="#presentationInfo" (click)="setOrder(stockList[i].id, stockList[i].apresentacaoId)">
+													{{ stockList[i].apresentacaoId }}
+													</a>
+												</p>
+												<p>
+													<font class="text-warning">Last Updated: </font> {{ stockList[i].updatedAt | date: 'dd/MM/yyyy'}}
+												</p>
+												<div class="progress progress-striped active">
+													<div class="progress-bar progress-bar-danger" [ngStyle]="{'width': percentage(stockList[i].quantidadeMinima, stockList[i].quantidade, 'danger')}"></div>
+													<div class="progress-bar progress-bar-warning" [ngStyle]="{'width': percentage(stockList[i].quantidadeMinima, stockList[i].quantidade, 'warning')}"></div>
+													<div class="progress-bar progress-bar-success" [ngStyle]="{'width': percentage(stockList[i].quantidadeMinima, stockList[i].quantidade, 'success')}"></div>
+												</div>
+											</div>
+											<div class="col-sm-2">
+												<div>
+													<br>
+													<br>
+												</div>
+												<a class="btn btn-primary btn-block" (click)="setOrder(stockList[i].id, stockList[i].apresentacaoId)" data-toggle="modal"
+													data-target="#orderModal">Order</a>
+											</div>
+										</div>
+									</div>
+								</li>
+							</ul>
+							<!-- End list of stock -->
+						</div>
+						<div class="tab-pane fade" id="soldOut">
+							<!-- list of stock -->
+							<ul class="list-group" *ngFor="let stock of stockListOutOfOrder; let i = index">
+								<li class="list-group-item justify-content-between">
+									<div class="container">
+										<div class="row">
+											<div class="col-sm-7">
+												<p>
+													<font class="text-primary">Stock ID: </font> {{ stockListOutOfOrder[i].id }}
+												</p>
+												<p>
+													<font class="text-warning">Quantity: </font> {{ stockListOutOfOrder[i].quantidade }}
+												</p>
+												<p>
+													<font class="text-warning">Minimum Quantity: </font> {{ stockListOutOfOrder[i].quantidadeMinima }}
+												</p>
+												<p>
+													<font class="text-warning">Presentation Id: </font>
+													<a href="#" class="btn btn-link" data-toggle="modal" data-target="#presentationInfo" (click)="setOrder(inStockListOutOfOrder[i].id,inStockListOutOfOrder[i].apresentacaoId)">
+													{{ stockListOutOfOrder[i].apresentacaoId }}
+													</a>
+												</p>
+												<p>
+													<font class="text-warning">Last Updated: </font> {{ stockListOutOfOrder[i].updatedAt | date: 'dd/MM/yyyy'}}
+												</p>
+												<div class="progress progress-striped active">
+													<div class="progress-bar progress-bar-danger" [ngStyle]="{'width': percentage(stockListOutOfOrder[i].quantidadeMinima, stockListOutOfOrder[i].quantidade, 'danger')}"></div>
+													<div class="progress-bar progress-bar-warning" [ngStyle]="{'width': percentage(stockListOutOfOrder[i].quantidadeMinima, stockListOutOfOrder[i].quantidade, 'warning')}"></div>
+													<div class="progress-bar progress-bar-success" [ngStyle]="{'width': percentage(stockListOutOfOrder[i].quantidadeMinima, stockListOutOfOrder[i].quantidade, 'success')}"></div>
+												</div>
+											</div>
+											<div class="col-sm-2">
+												<div>
+													<br>
+													<br>
+												</div>
+												<a class="btn btn-danger btn-block" (click)="setOrder(inStockListOutOfOrder[i].id,inStockListOutOfOrder[i].apresentacaoId)"
+													data-toggle="modal" data-target="#orderModal">Order</a>
+											</div>
+										</div>
+									</div>
+								</li>
+							</ul>
+							<!-- End list of stock -->
+						</div>
+						<div class="tab-pane fade" id="inStock">
+							<!-- list of stock -->
+							<ul class="list-group" *ngFor="let stock of inStockListOutOfOrder; let i = index">
+								<li class="list-group-item justify-content-between">
+									<div class="container">
+										<div class="row">
+											<div class="col-sm-7">
+												<p>
+													<font class="text-primary">Stock ID: </font> {{ inStockListOutOfOrder[i].id }}
+												</p>
+												<p>
+													<font class="text-warning">Quantity: </font> {{ inStockListOutOfOrder[i].quantidade }}
+												</p>
+												<p>
+													<font class="text-warning">Minimum Quantity: </font> {{ inStockListOutOfOrder[i].quantidadeMinima }}
+												</p>
+												<p>
+													<font class="text-warning">Presentation Id: </font>
+													<a href="#" class="btn btn-link" data-toggle="modal" data-target="#presentationInfo">
+													{{ inStockListOutOfOrder[i].apresentacaoId }}
+													</a>
+												</p>
+												<p>
+													<font class="text-warning">Last Updated: </font> {{ inStockListOutOfOrder[i].updatedAt | date: 'dd/MM/yyyy'}}
+												</p>
+												<div class="progress progress-striped active">
+													<div class="progress-bar progress-bar-danger" [ngStyle]="{'width': percentage(inStockListOutOfOrder[i].quantidadeMinima, inStockListOutOfOrder[i].quantidade, 'danger')}"></div>
+													<div class="progress-bar progress-bar-warning" [ngStyle]="{'width': percentage(inStockListOutOfOrder[i].quantidadeMinima, inStockListOutOfOrder[i].quantidade, 'warning')}"></div>
+													<div class="progress-bar progress-bar-success" [ngStyle]="{'width': percentage(inStockListOutOfOrder[i].quantidadeMinima, inStockListOutOfOrder[i].quantidade, 'success')}"></div>
+												</div>
+											</div>
+											<div class="col-sm-2">
+												<div>
+													<br>
+													<br>
+												</div>
+												<a class="btn btn-primary btn-block" (click)="setOrder(inStockListOutOfOrder[i].id,inStockListOutOfOrder[i].apresentacaoId)"
+													data-toggle="modal" data-target="#orderModal">Order</a>
+											</div>
+										</div>
+									</div>
+								</li>
+							</ul>
+							<!-- End list of stock -->
+						</div>
+						<div class="tab-pane fade" id="statistics">
+							<hr>
+							<canvas baseChart [data]="doughnutChartData" [labels]="doughnutChartLabels" [chartType]="doughnutChartType" (chartHover)="chartHovered($event)"
+							(chartClick)="chartClicked($event)">
+							</canvas>
+						</div>
+						<div class="tab-pane fade" id="addStock">
+							<hr>
+							<!--
+								{
+								    "apresentacaoId":"5a31a99a2df6d5370f4e5d99",
+								    "quantidade": "30",
+								    "quantidadeMinima": "199",
+								    "farmacia": "5a37d024adbf45590da8240d"
+								}
+								              -->
+							<canvas baseChart [data]="doughnutChartData" [labels]="doughnutChartLabels" [chartType]="doughnutChartType" (chartHover)="chartHovered($event)"
+							(chartClick)="chartClicked($event)">
+							</canvas>
+						</div>
+					</div>
+				</div>
+				<!-- end of panel hiden panel stock list-->
+			</div>
+		</div>
+		<!-- end of visible panel -->
+	</div>
+</div>
+<!-- Modal   Presentation INfo -->
+<div id="presentationInfo" class="modal fade" role="dialog">
+	<div class="modal-dialog">
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title">Order Form:</h4>
+			</div>
+			<div class="modal-body">
+				<p>
+					<!--{{presentationToOrder | json}} -->
+					<font class="text-warning">Presentation Id: </font> {{ presentationToOrderId }}
+				</p>
+				<p>
+					<font class="text-warning">Medicine Name: </font> {{ presentationToOrder.Medicamento.nome }}
+				</p>
+				<p>
+					<font class="text-warning">Pharmacy Name: </font> {{ presentationToOrder.Farmaco.nome }}
+				</p>
+				<!--
+					"forma":"Comprimido",
+					 "concentracao":"1.2mg",
+					 "quantidade":"21",
+					      -->
+				<p>
+					<font class="text-warning">Form factor: </font> {{ presentationToOrder.forma }}
+				</p>
+				<p>
+					<font class="text-warning">Concentration: </font> {{ presentationToOrder.concentracao }}
+				</p>
+				<p>
+					<font class="text-warning">Quantity: </font> {{ presentationToOrder.quantidade }}
+				</p>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- Modal   ORDER 
+	{
+	     apresentacaoId: "5a31a99a2df6d5370f4e5d99",
+	     quantidadeEncomendar: "121",
+	     alturaDia: "tarde",
+	     farmacia: "5a37d024adbf45590da8240d"
+	   }
+	
+	-->
+<div id="orderModal" class="modal fade" role="dialog">
+	<div class="modal-dialog">
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title">Order Form:</h4>
+			</div>
+			<div class="modal-body">
+				<form class="form-horizontal" name="formOrder" (ngSubmit)="order()" #f2="ngForm" novalidate>
+				<fieldset>
+					<div class="form-group">
+						<label class="col-lg-2 control-label">Basic Info</label>
+						<div class="col-lg-10">
+							<p>
+								<font class="text-warning">Presentation Id</font> {{ presentationToOrderId }}
+							</p>
+							<p>
+								<font class="text-warning">Pharmacy Id</font> {{ pharmacyId }}
+							</p>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="quantity" class="col-lg-2 control-label">Quantity</label>
+						<div class="col-lg-10">
+							<input type="text" class="form-control" id="quantity" placeholder="quantity" name="quantity" [(ngModel)]="model.quantity"
+							#quantity="ngModel" required />
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="select" class="col-lg-2 control-label">Prefered time of the day</label>
+						<div class="col-lg-10">
+							<select class="form-control" name="preferedTime" [(ngModel)]="model.preferedTime" required>
+							<option *ngFor="let preferedTimeTmp of preferedTime" [value]="preferedTimeTmp">{{preferedTimeTmp}}
+							</option>
+							</select>
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-lg-10 col-lg-offset-2">
+							<button (click)="order()" type="submit" class="btn btn-primary">Submit</button>
+						</div>
+					</div>
+				</fieldset>
+				</form>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			</div>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,119 @@
+<div class="container">
+  <!-- nav tabs -->
+  <ul class="nav nav-tabs">
+    <li class="active">
+      <a href="#logs" data-toggle="tab">Logs</a>
+    </li>
+    <li>
+      <a href="#todayLogs" data-toggle="tab">Today Logs</a>
+    </li>
+    <li>
+      <a href="#errorLogs" data-toggle="tab">Error Logs</a>
+    </li>
+  </ul>
+  <!--end of nav tabs -->
+
+  <!--content of nav tabs -->
+  <div id="myTabContent" class="tab-content">
+
+    <!-- logs list pane -->
+    <div class="tab-pane fade active in " id="logs">
+      <ul class="list-group" *ngFor="let log of logs; let i = index">
+        <li class="list-group-item justify-content-between">
+          <div class="container">
+            <div class="row">
+              <div class="col-sm-7">
+                <p>
+                  <font class="text-primary">Title: </font> {{ logs[i].title}}
+                </p>
+                <p>
+                  <font class="text-primary">Description: </font> {{ logs[i].description }}
+                </p>
+                <p>
+                  <font class="text-primary">Error: </font> {{ logs[i].errors }}
+                </p>
+                <p>
+                  <font class="text-primary">Created at: </font> {{ logs[i].createdAt | date: 'dd/MM/yyyy - hh:mm:ss' }}
+                </p>
+                <p>
+                  <font class="text-primary">Updated at: </font> {{ logs[i].updatedAt | date: 'dd/MM/yyyy - hh:mm:ss' }}
+                </p>
+              </div>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+    <!--end of logs list pane -->
+
+    <!-- todayLogs list pane -->
+    <div class="tab-pane fade active in " id="todayLogs">
+      <div *ngIf="todayLogs.length == 0">
+        <br>
+        <hr>
+        <p>No logs to show...</p>
+        <hr>
+      </div>
+      <div *ngIf="todayLogs.length">
+        <ul class="list-group" *ngFor="let todayLog of todayLogs; let i = index">
+          <li class="list-group-item justify-content-between">
+            <div class="container">
+              <div class="row">
+                <div class="col-sm-7">
+                  <p>
+                    <font class="text-primary">Title: </font> {{ todayLogs[i].title}}
+                  </p>
+                  <p>
+                    <font class="text-primary">Description: </font> {{ todayLogs[i].description }}
+                  </p>
+                  <p>
+                    <font class="text-primary">Error: </font> {{ todayLogs[i].errors }}
+                  </p>
+                  <p>
+                    <font class="text-primary">Created at: </font> {{ todayLogs[i].createdAt | date: 'dd/MM/yyyy - hh:mm:ss' }}
+                  </p>
+                  <p>
+                    <font class="text-primary">Updated at: </font> {{ todayLogs[i].updatedAt | date: 'dd/MM/yyyy - hh:mm:ss' }}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <!--end of today logs list pane -->
+
+    <!-- error-logs list pane -->
+    <div class="tab-pane fade active in " id="errorLogs">
+      <ul class="list-group" *ngFor="let errorlog of errorLogs; let i = index">
+        <li class="list-group-item justify-content-between">
+          <div class="container">
+            <div class="row">
+              <div class="col-sm-7">
+                <p>
+                  <font class="text-primary">Title: </font> {{ errorLogs[i].title}}
+                </p>
+                <p>
+                  <font class="text-primary">Description: </font> {{ errorLogs[i].description }}
+                </p>
+                <p>
+                  <font class="text-primary">Error: </font> {{ errorLogs[i].errors }}
+                </p>
+                <p>
+                  <font class="text-primary">Created at: </font> {{ errorLogs[i].createdAt | date: 'dd/MM/yyyy - hh:mm:ss' }}
+                </p>
+                <p>
+                  <font class="text-primary">Updated at: </font> {{ errorLogs[i].updatedAt | date: 'dd/MM/yyyy - hh:mm:ss' }}
+                </p>
+              </div>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+    <!--end of error-logs list pane -->
+
+  </div>
+  <!--end of content of nav tabs -->
+</div>

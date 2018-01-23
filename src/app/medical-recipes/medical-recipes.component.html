@@ -1,0 +1,106 @@
+<html>
+
+<body>
+
+
+  <div id="one" class="container">
+    <!-- MEDICAL RECIPES -->
+    <div *ngFor="let medicalRecipe of medicalRecipes; let i = index">
+      <div class="panel-body">
+        <div class="panel">
+          <div class="container">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+              <div class="panel-group wrap" id="bs-collapse1">
+                <div class="panel-heading">
+                  <h4 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#bs-collapse1" href="#one{{i}}">
+                      <p>
+                        <font class="text-primary">Medical Recipe ID: </font> {{medicalRecipes[i]._id}}
+                      </p>
+                    </a>
+                  </h4>
+                </div>
+                <div id="one{{i}}" class="panel-collapse collapse">
+                  <div class="panel-body">
+                    <p>
+                      <font class="text-primary">ID: </font> {{medicalRecipes[i]._id}} </p>
+                    <p>
+                      <font class="text-primary">PatientID: </font> {{medicalRecipes[i].patient}}</p>
+                    <p>
+                      <font class="text-primary">DoctorID: </font> {{medicalRecipes[i].doctor}}</p>
+                    <!--PRESCRIPTIONS-->
+                    <ul>
+                      <div *ngFor="let prescription of medicalRecipes[i].prescriptions; let j = index">
+
+                        <div class="panel-body">
+                          <div class="container">
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                              <div class="panel-group wrap" id="bs-collapse2">
+                                <div class="panel-heading">
+                                  <h4 class="panel-title">
+                                    <a data-toggle="collapse" data-parent="#bs-collapse2" href="#one{{i}}{{j}}">
+                                      <p>
+                                        <font class="text-primary">Prescription ID: </font> {{medicalRecipes[i].prescriptions[j]._id}}
+                                      </p>
+                                    </a>
+                                  </h4>
+                                </div>
+                                <div id="one{{i}}{{j}}" class="panel-collapse collapse">
+                                  <div class="panel-body">
+
+                                    <p>
+                                      <font class="text-primary">DrugID: </font> {{ medicalRecipes[i].prescriptions[j].drug}}</p>
+                                    <p>
+                                      <font class="text-primary">Medicine: </font> {{ medicalRecipes[i].prescriptions[j].medicine}}</p>
+                                    <p>
+                                      <font class="text-primary">Concentration: </font> {{ medicalRecipes[i].prescriptions[j].concentration}}</p>
+                                    <p>
+                                      <font class="text-primary">Posology: </font> {{ medicalRecipes[i].prescriptions[j].posology}}</p>
+                                    <p>
+                                      <font class="text-primary">Quantity: </font> {{ medicalRecipes[i].prescriptions[j].quantity}}</p>
+                                    <p>
+                                      <font class="text-primary">Packages Number: </font> {{ medicalRecipes[i].prescriptions[j].packagesNumber}}</p>
+                                    <p>
+                                      <font class="text-primary">Prescribed Posology: </font> {{ medicalRecipes[i].prescriptions[j].prescribedPosology}}</p>
+                                    <p>
+                                      <font class="text-primary">Form: </font> {{ medicalRecipes[i].prescriptions[j].form}}</p>
+                                    <!--DISPENSES-->
+                                    <ul>
+                                      <li *ngFor="let dispense of medicalRecipes[i].prescriptions[j].dispenses; let k = index">
+                                        <p>
+                                          <font color="cyan">---- Dispenses ---</font>
+                                        </p>
+                                        <p>
+                                          <font class="text-primary">Pharmacist: </font> {{medicalRecipes[i].prescriptions[j].dispenses[k].pharmacist}}</p>
+                                        <p>
+                                          <font class="text-primary">Dispense Date: </font> {{medicalRecipes[i].prescriptions[j].dispenses[k].dispenseDate}}</p>
+                                        <p>
+                                          <font class="text-primary">Dispensed Quantity: </font> {{medicalRecipes[i].prescriptions[j].dispenses[k].dispensedQuantity}}</p>
+                                      </li>
+                                    </ul>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </ul>
+                  </div>
+                  <!-- end of panel (PRESCRIPTIONS) -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <!-- end of class (MEDICAL RECIPES) -->
+
+
+
+</body>
+
+</html>

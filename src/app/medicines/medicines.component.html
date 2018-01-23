@@ -1,0 +1,46 @@
+<div id="one" class="container">
+  <!-- MEDICAL RECIPES -->
+  <div *ngFor="let presentation of presentations; let i = index">
+    <div class="panel-body">
+      <div class="panel">
+        <div class="container">
+          <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="panel-group wrap" id="bs-collapse1">
+              <div class="panel-heading">
+                <h4 class="panel-title">
+                  <a data-toggle="collapse" data-parent="#bs-collapse1" href="#one{{i}}">
+                    <p>
+                      <font class="text-primary">Presentation ID: </font> {{presentations[i].id}}
+                    </p>
+                  </a>
+                </h4>
+              </div>
+              <div id="one{{i}}" class="panel-collapse collapse">
+                <div class="panel-body">
+                  <p>
+                    <font class="text-primary">Medicine name: </font> {{presentations[i].Medicamento.nome}}
+                  </p>
+                  <p>
+                    <font class="text-primary">Drug name: </font> {{presentations[i].Farmaco.nome}}
+                  </p>
+                  <p>
+                    <font class="text-primary">Posology: </font> {{presentations[i].id}}
+                  </p>
+                  <p>
+                    <font class="text-primary">Form: </font> {{presentations[i].forma}}
+                  </p>
+                  <p>
+                    <font class="text-primary">Concentration: </font> {{presentations[i].concentracao}}
+                  </p>
+                  <p>
+                    <font class="text-primary">Quantity: </font> {{presentations[i].quantidade}}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- end of class (MEDICAL RECIPES) -->

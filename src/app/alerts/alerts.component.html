@@ -1,0 +1,76 @@
+<div class="container">
+  <form name="form" (ngSubmit)="f.form.valid" #f="ngForm" novalidate>
+
+    <div class="row">
+      <div class="col-sm-11">
+        <div class="alert alert-info">
+          Your alert is set for {{currentAlertDays}} days!
+        </div>
+      </div>
+      <div class="col-sm-1">
+        <!-- Button to trigger modal -->
+        <a href="#myModal" class="btn btn-lg btn-primary" data-toggle="modal">Change</a>
+      </div>
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+            <h4 class="modal-title">Set Alert</h4>
+          </div>
+          <div class="modal-body">
+            <div class="form-group" width="400px" [ngClass]="{ 'has-error': f.submitted && !alertDays.valid }">
+              <label for="alertDays">Number of days</label>
+              <input type="text" class="form-control" name="alertDays" [(ngModel)]="model.alertDays" #alertDays="ngModel" required />
+              <div *ngIf="f.submitted && !alertDays.valid" class="helpblock">Number of days is required</div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" (click)="setAlertDays(model.alertDays)" class="btn btn-default" data-dismiss="modal">Save</button>
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+
+          </div>
+        </div>
+        <!-- /.modal-content -->
+      </div>
+      <!-- /.modal-dialog -->
+    </div>
+    <!-- /.modal -->
+  </form>
+
+
+  <div *ngIf="filteredPrescriptions.length == 0" class="alert alert-success">
+    <p>You don't have Medical Recipes expiring in the next {{currentAlertDays}} days!</p>
+    <br>
+    <!--
+      <img src="assets/images/drugicon.png" class="img-rounded center-block img-responsive" alt="">
+    -->
+  </div>
+  <div *ngIf="filteredPrescriptions.length > 0" class="alert alert-warning">
+    You have {{filteredPrescriptions.length}} Medical Recipes expiring in the next {{currentAlertDays}} days!
+  </div>
+
+  <table *ngIf="filteredPrescriptions.length > 0" class="table table-responsive table-striped table-hover">
+    <thead class="bg-primary">
+      <tr>
+        <th>Medical Recipe ID</th>
+        <th>Days To Expire</th>
+      </tr>
+    </thead>
+    <tbody>
+      <ng-container *ngFor="let prescription of filteredPrescriptions ; let i = index ">
+        <tr>
+          <td>{{filteredPrescriptions[i]._id}}</td>
+          <td>
+            <a></a>
+            {{calcDaysToExpire(filteredPrescriptions[i].prescriptionExpirationDate)}}
+          </td>
+        </tr>
+      </ng-container>
+    </tbody>
+  </table>
+
+
+</div>

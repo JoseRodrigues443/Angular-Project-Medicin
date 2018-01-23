@@ -1,0 +1,18 @@
+<div [formGroup]="prescriptionForm">
+    <div class="form-group col-xs-6">
+        <label>Presentation</label>
+        <input type="text" class="form-control" formControlName="presentation">
+        <small [hidden]="prescriptionForm.controls.presentation.valid" class="text-danger">
+            Presentation ID is required
+        </small>
+        <p></p>
+        <label>Number of Packages</label>
+        <input type="text" class="form-control" formControlName="packagesNumber">
+        <small [hidden]="prescriptionForm.controls.packagesNumber.valid" class="text-danger">
+            Number of Packages is required
+        </small>
+        <p></p>
+        <label>Prescribed Posology</label>
+        <input type="text" class="form-control" formControlName="prescribedPosology">
+    </div>
+</div>

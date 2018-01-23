@@ -1,0 +1,48 @@
+<div id="one" class="container">
+  <!-- MEDICAL RECIPES -->
+  <div *ngFor="let presentation of presentations; let i = index">
+    <div class="panel-body ">
+      <div class="panel">
+        <div class="container">
+          <div class="panel-group wrap" id="bs-collapse1">
+            <div class="panel-heading">
+              <h4 class="panel-title">
+                <a data-toggle="collapse" data-parent="#bs-collapse1" href="#one{{i}}">
+                  <p>
+                    <font class="text-primary">Presentation ID: </font> {{presentations[i].id}}
+                  </p>
+                </a>
+              </h4>
+            </div>
+            <div id="one{{i}}" class="panel-collapse collapse">
+              <div class="list-group">
+                <a class="list-group-item active">
+                  Comments:
+                </a>
+                <a *ngFor="let comment of presentations[i].Comentarios;" class="list-group-item">
+                  {{comment.comentario}}
+                </a>
+                <a class="list-group-item">
+                  <form class="form-inline" name="form" (ngSubmit)="f.form.valid && comment(presentations[i].id)" #f="ngForm" novalidate>
+                    <!--
+                          <input type="text" placeholder="New Comment" class="form-control" name="textoComentario" [(ngModel)]="model.textoComentario"
+                          #textoComentario="ngModel" required />
+                        -->
+                    <textarea class="form-control" placeholder="New Comment" rows="2" cols="50" name="commentText" [(ngModel)]="model.commentText"
+                      #commentText="ngModel" required></textarea>
+                    <div class="btn-group ">
+                      <button class="btn btn-priary ">Comment</button>
+                      <button type="button " (click)="help() " class="btn btn-info ">Help</button>
+                    </div>
+                  </form>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- end of class (MEDICAL RECIPES) -->
+
+  

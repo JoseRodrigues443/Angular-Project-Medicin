@@ -1,0 +1,65 @@
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <!-- <img src="smiley.gif" align="left"> -->
+      <a class="navbar-brand" routerLink="/home">
+        <span class="glyphicon glyphicon-plus"></span> Electronic Drug Prescription</a>
+    </div>
+    <ul class="nav navbar-nav">
+
+      <li >
+        <a routerLink="/medicines">Medicines</a>
+      </li>
+
+      <li *ngIf="userInfo">
+          <a  *ngIf="userInfo.userRoles[0]=='doctor'" routerLink="/dashboardMedic">Dashboard</a>
+          <a  *ngIf="userInfo.userRoles[0]=='pharmacist'" routerLink="/dashboardPharmacist">Dashboard</a>
+          <a  *ngIf="userInfo.userRoles[0]=='patient'" routerLink="/dashboardPatient">Dashboard</a>
+          <a  *ngIf="userInfo.userRoles[0]=='admin'" routerLink="/dashboardAdmin">Dashboard</a>
+          <a  *ngIf="userInfo.userRoles[0]=='provider'" routerLink="/dashboardProvider">Dashboard</a>
+      </li>
+      <li *ngIf="userInfo">
+        <a *ngIf="userInfo.userRoles[0]=='doctor'" routerLink="/doctor">Medical Recipes Management</a>
+        <a *ngIf="userInfo.userRoles[0]=='pharmacist'" routerLink="/pharmacist">Pharmacy</a>
+        <a *ngIf="userInfo.userRoles[0]=='patient'" routerLink="/patient">My Medical Recipes</a>
+        <a *ngIf="userInfo.userRoles[0]=='provider'" routerLink="/provider">Orders</a>
+        <a *ngIf="userInfo.userRoles[0]=='admin'" routerLink="/admin">Logs Management</a>
+
+        
+      </li>
+      <li *ngIf="userInfo">
+       
+        <a *ngIf="userInfo.userRoles[0]=='pharmacist'" routerLink="/pharmacist/stock">Pharmacy Stock</a>
+        
+      </li>
+      <li *ngIf="userInfo">
+       
+        <a *ngIf="userInfo.userRoles[0]=='patient'" routerLink="/alerts">My Alerts</a>
+        
+
+      </li>
+      <li>
+        <a routerLink="/about">About</a>
+      </li>
+    </ul>
+    <ul class="nav navbar-nav navbar-right">
+      <li>
+        <a *ngIf="!userInfo" routerLink="/register">Register
+          <span class="glyphicon glyphicon-user"></span>
+        </a>
+        <a *ngIf="userInfo">Welcome {{userName}}
+          <span class="glyphicon glyphicon-user"></span>
+        </a>
+      </li>
+      <li>
+        <a *ngIf="!userInfo" routerLink="/login">Login
+          <span class="glyphicon glyphicon-log-in"></span>
+        </a>
+        <a *ngIf="userInfo" routerLink="/login">Logout
+          <span class="glyphicon glyphicon-log-out"></span>
+        </a>
+      </li>
+    </ul>
+  </div>
+</nav>
+<router-outlet></router-outlet>

@@ -1,0 +1,12 @@
+button {
+  font-size: 13px;
+  background-color: #3498DB;
+  font-weight: 700px;
+  color: rgb(255, 255, 255);
+}
+button:hover {
+  font-size: 13px;
+  background-color: rgb(43, 120, 171);
+  font-weight: 700px;
+  color: rgb(255, 255, 255);
+}

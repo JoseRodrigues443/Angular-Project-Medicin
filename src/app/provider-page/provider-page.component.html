@@ -1,0 +1,182 @@
+<div class="container">
+  <!-- nav tabs -->
+  <ul class="nav nav-tabs">
+    <li class="active">
+      <a href="#orders" data-toggle="tab">Orders</a>
+    </li>
+    <li>
+      <a href="#today" data-toggle="tab">Today</a>
+    </li>
+    <li>
+      <a href="#dispatched" data-toggle="tab">Dispatched</a>
+    </li>
+    <li>
+      <a href="#notYetDispatched" data-toggle="tab">Not Yet Dispatched</a>
+    </li>
+    <li>
+      <a href="#todaysItinerary" data-toggle="tab">Today's itinerary</a>
+    </li>
+  </ul>
+  <!--end of nav tabs -->
+
+  <!--content of nav tabs -->
+  <div id="myTabContent" class="tab-content">
+
+    <!-- orders list pane -->
+    <div class="tab-pane fade active in " id="orders">
+        <div *ngIf="orders.length == 0">
+        <br>
+        <hr>
+        <p>No orders received.</p>
+        <hr>
+      </div>
+      <div *ngIf="orders.length">
+        <ul class="list-group" *ngFor="let order of orders; let i = index">
+          <li class="list-group-item justify-content-between">
+            <div class="container">
+              <div class="row">
+                <div class="col-sm-7">
+                  <p>
+                    <font class="text-primary">Order ID: </font> {{ orders[i].id }}
+                  </p>
+                  <p>
+                    <font class="text-primary">Pharmacy ID: </font> {{ orders[i].nomeFarmacia }}
+                  </p>
+                  <p>
+                    <font class="text-primary">Presentation: </font> {{ orders[i].apresentacaoID }}
+                  </p>
+                  <p>
+                    <font class="text-primary">Quantity: </font> {{ orders[i].quantidade }}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <!-- end of orders list pane -->
+
+    <!-- today orders list pane -->
+    <div class="tab-pane fade active in " id="today">
+        <div *ngIf="todayOrders.length == 0">
+            <br>
+            <hr>
+            <p>No orders received.</p>
+            <hr>
+          </div>
+          <div *ngIf="todayOrders.length">
+        <ul class="list-group" *ngFor="let todayOrder of todayOrders; let i = index">
+          <li class="list-group-item justify-content-between">
+            <div class="container">
+              <div class="row">
+                <div class="col-sm-7">
+                  <p>
+                    <font class="text-primary">Order ID: </font> {{ todayOrders[i].id }}
+                  </p>
+                  <p>
+                    <font class="text-primary">Pharmacy ID: </font> {{ todayOrders[i].nomeFarmacia }}
+                  </p>
+                  <p>
+                    <font class="text-primary">Presentation: </font> {{ todayOrders[i].apresentacaoID }}
+                  </p>
+                  <p>
+                    <font class="text-primary">Quantity: </font> {{ todayOrders[i].quantidade }}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <!-- end of today orders list pane -->
+
+    <!-- dispatched orders list pane -->
+    <div class="tab-pane fade active in " id="dispatched">
+        <div *ngIf="dispatchedOrders.length == 0">
+            <br>
+            <hr>
+            <p>No orders received.</p>
+            <hr>
+          </div>
+          <div *ngIf="dispatchedOrders.length">
+        <ul class="list-group" *ngFor="let dispatchedOrder of dispatchedOrders; let i = index">
+          <li class="list-group-item justify-content-between">
+            <div class="container">
+              <div class="row">
+                <div class="col-sm-7">
+                  <p>
+                    <font class="text-primary">Order ID: </font> {{ dispatchedOrders[i].id }}
+                  </p>
+                  <p>
+                    <font class="text-primary">Pharmacy ID: </font> {{ dispatchedOrders[i].nomeFarmacia }}
+                  </p>
+                  <p>
+                    <font class="text-primary">Presentation: </font> {{ dispatchedOrders[i].apresentacaoID }}
+                  </p>
+                  <p>
+                    <font class="text-primary">Quantity: </font> {{ dispatchedOrders[i].quantidade }}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </li>
+        </ul>
+          </div>
+    </div>
+    <!-- end of dispatched orders list pane -->
+
+    <!-- not Yet Dispatched orders list pane -->
+    <div class="tab-pane fade active in " id="notYetDispatched">
+        <div *ngIf="notYetDispatchedOrders.length == 0">
+            <br>
+            <hr>
+            <p>No orders received.</p>
+            <hr>
+          </div>
+          <div *ngIf="notYetDispatchedOrders.length">
+        <ul class="list-group" *ngFor="let notYetDispatched of notYetDispatchedOrders; let i = index">
+          <li class="list-group-item justify-content-between">
+            <div class="container">
+              <div class="row">
+                <div class="col-sm-7">
+                  <p>
+                    <font class="text-primary">Order ID: </font> {{ notYetDispatchedOrders[i].id }}
+                  </p>
+                  <p>
+                    <font class="text-primary">Pharmacy ID: </font> {{ notYetDispatchedOrders[i].nomeFarmacia }}
+                  </p>
+                  <p>
+                    <font class="text-primary">Presentation: </font> {{ notYetDispatchedOrders[i].apresentacaoID }}
+                  </p>
+                  <p>
+                    <font class="text-primary">Quantity: </font> {{ notYetDispatchedOrders[i].quantidade }}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </li>
+        </ul>
+          </div>
+    </div>
+    <!-- not Yet Dispatched orders list pane -->
+
+    <!-- today's itinerary pane -->
+    <div class="tab-pane fade active in " id="todaysItinerary">
+      <!-- this creates a google map on the page with the given lat/lng from -->
+      <!-- the component as the initial center of the map: -->
+      <agm-map #map [latitude]=initialX [longitude]=initialY [zoom]="16">
+        <agm-polyline [strokeColor]="'red'">
+          <ng-container *ngFor="let i of coords">
+            <agm-polyline-point [latitude]="i.lat" [longitude]="i.lng">
+            </agm-polyline-point>
+          </ng-container>
+        </agm-polyline>
+      </agm-map>
+    </div>
+    <!-- end of today's itinerary pane -->
+
+  </div>
+</div>
+<!--end of content of nav tabs -->

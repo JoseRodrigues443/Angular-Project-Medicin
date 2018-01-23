@@ -1,0 +1,36 @@
+<div>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-lg-12">
+        <h2>Dashboard</h2>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-lg-6">
+        <div class="bs-component">
+          <div class="panel panel-danger shadow">
+            <div class="panel-heading">Delivered Orders Per Month</div>
+            <div class="panel-body">
+              <div style="display: block">
+                <canvas width="90" height="240" baseChart [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions"
+                  [colors]="lineChartColors" [legend]="barChartLegend" [chartType]="barChartType" (chartHover)="chartHovered($event)"
+                  (chartClick)="chartClicked($event)"></canvas>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-3">
+        <div class="bs-component">
+          <div class="panel panel-success shadow">
+            <div class="panel-heading">Number of Last Year's Deliveries</div>
+            <div class="panel-body">
+              {{lastYearDelivers}}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
